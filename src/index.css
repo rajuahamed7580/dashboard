@@ -1,1 +1,116 @@
 @import "tailwindcss";
+
+/* Native <dialog> modal scroll containment & backdrop */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  background: rgb(2 6 23 / 0.78);
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Responsive DataTable with container queries and sticky headers */
+.table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  container-type: inline-size;
+}
+
+.responsive-data-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.responsive-data-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+@container (width < 640px) {
+  .responsive-data-table,
+  .responsive-data-table thead,
+  .responsive-data-table tbody,
+  .responsive-data-table tr,
+  .responsive-data-table th,
+  .responsive-data-table td {
+    display: block;
+  }
+
+  .responsive-data-table thead {
+    display: none;
+  }
+
+  .responsive-data-table tbody tr {
+    margin-block-end: 0.75rem;
+    border: 1px solid rgb(30 41 59);
+    border-radius: 0.75rem;
+    background: rgb(15 23 42);
+    overflow: hidden;
+  }
+
+  .responsive-data-table tbody td {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    border-bottom: 1px solid rgb(30 41 59 / 0.6);
+    text-align: right;
+  }
+
+  .responsive-data-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .responsive-data-table tbody td[data-label]::before {
+    content: attr(data-label);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(148 163 184);
+    text-align: left;
+    flex-shrink: 0;
+  }
+}
+
+/* Manual popover toast stack */
+.toast-popover {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  inset: 1rem 1rem auto auto;
+  position: fixed;
+  overflow: visible;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition-behavior: allow-discrete;
+}
+
+.toast-popover + .toast-popover {
+  margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-popover {
+    transition: none;
+  }
+}
+
+/* Screen-reader only helper */
+.inclusively-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
