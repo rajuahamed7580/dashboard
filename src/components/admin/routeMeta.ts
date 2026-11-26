@@ -7,6 +7,7 @@ export const SEGMENT_LABELS: Record<string, string> = {
   edit: 'Edit Post',
   comments: 'Comments',
   'comment-generator': 'Comment Generator',
+  'custom-urls': 'Custom URLs',
   profile: 'Profile',
   settings: 'Settings'
 };

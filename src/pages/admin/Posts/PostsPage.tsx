@@ -112,7 +112,11 @@ export default function PostsPage() {
             </Link>
             <div className="text-xs text-blue-400">@{post.displayName}</div>
             <div className="text-[11px] text-slate-500 font-mono truncate max-w-[220px]">
-              /posts/{post.slug}
+              {post.customUrls?.[0] || (
+                <Link to="/admin/custom-urls" className="text-slate-400 hover:text-blue-400">
+                  Set custom URL →
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -197,16 +201,27 @@ export default function PostsPage() {
             )}
           </button>
 
-          <a
-            href={`${WEBSITE_BASE_URL}/posts/${post.slug}`}
-            target="_blank"
-            rel="noreferrer"
-            title="Open live page"
-            aria-label={`Open live page for ${post.title}`}
-            className="p-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-          </a>
+          {post.customUrls?.[0] ? (
+            <a
+              href={`${WEBSITE_BASE_URL}${post.customUrls[0]}`}
+              target="_blank"
+              rel="noreferrer"
+              title="Open live page"
+              aria-label={`Open live page for ${post.title}`}
+              className="p-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+            </a>
+          ) : (
+            <Link
+              to="/admin/custom-urls"
+              title="Configure custom URL"
+              aria-label={`Configure custom URL for ${post.title}`}
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700 transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+            </Link>
+          )}
 
           <button
             type="button"

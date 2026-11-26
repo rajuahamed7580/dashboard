@@ -119,21 +119,38 @@ export default function PostDetailsPage() {
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-1">
-              @{post.displayName} · <span className="font-mono">/posts/{post.slug}</span>
+              @{post.displayName} ·{' '}
+              {post.customUrls?.[0] ? (
+                <span className="font-mono">{post.customUrls[0]}</span>
+              ) : (
+                <Link to="/admin/custom-urls" className="text-blue-400 hover:underline">
+                  Set custom URL
+                </Link>
+              )}
             </p>
           </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <a
-            href={`${WEBSITE_BASE_URL}/posts/${post.slug}`}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 text-xs font-semibold transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-            View Live
-          </a>
+          {post.customUrls?.[0] ? (
+            <a
+              href={`${WEBSITE_BASE_URL}${post.customUrls[0]}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 text-xs font-semibold transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+              View Live
+            </a>
+          ) : (
+            <Link
+              to="/admin/custom-urls"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 text-xs font-semibold transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+              Set Custom URL
+            </Link>
+          )}
 
           <Link
             to={`/admin/posts/${post._id}/edit`}

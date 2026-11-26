@@ -86,6 +86,7 @@ export interface Post {
   averageRating: number;
   totalReviews: number;
   isFeatured?: boolean;
+  customUrls?: string[];
   user?: {
     _id: string;
     name: string;
@@ -167,4 +168,32 @@ export interface ToastItem {
   id: string;
   text: string;
   type: 'success' | 'error' | 'info';
+}
+
+export interface CustomUrlItem {
+  _id: string;
+  post:
+    | string
+    | {
+        _id: string;
+        title: string;
+        slug: string;
+        displayName: string;
+        mainImage?: string;
+        status?: 'published' | 'draft' | 'archived';
+        location?: {
+          country?: string;
+          state?: string;
+          city?: string;
+        };
+      };
+  country: string;
+  state: string;
+  city: string;
+  username: string;
+  normalizedPath: string;
+  shortTitle?: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt?: string;
 }

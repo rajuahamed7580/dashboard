@@ -13,6 +13,7 @@ import EditPostPage from '../pages/admin/Posts/EditPostPage';
 import CommentsPage from '../pages/admin/Comments/CommentsPage';
 import CommentDetailsPage from '../pages/admin/Comments/CommentDetailsPage';
 import CommentGeneratorPage from '../pages/admin/CommentGenerator/CommentGeneratorPage';
+import CustomUrlsPage from '../pages/admin/CustomUrls/CustomUrlsPage';
 import ProfilePage from '../pages/admin/Profile/ProfilePage';
 import SettingsPage from '../pages/admin/Settings/SettingsPage';
 
@@ -44,6 +45,7 @@ export default function AdminRoutes() {
 
           {/* Content Management */}
           <Route path="comment-generator" element={<CommentGeneratorPage />} />
+          <Route path="custom-urls" element={<CustomUrlsPage />} />
 
           {/* Account */}
           <Route path="profile" element={<ProfilePage />} />

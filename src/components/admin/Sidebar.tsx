@@ -6,6 +6,7 @@ import {
   FileText,
   MessageSquare,
   Sparkles,
+  Link2,
   UserCircle,
   Settings,
   ChevronLeft,
@@ -47,7 +48,10 @@ const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: 'Content Management',
-    items: [{ to: '/admin/comment-generator', label: 'Comment Generator', icon: Sparkles }]
+    items: [
+      { to: '/admin/comment-generator', label: 'Comment Generator', icon: Sparkles },
+      { to: '/admin/custom-urls', label: 'Custom URLs', icon: Link2 }
+    ]
   },
   {
     label: 'Account',
