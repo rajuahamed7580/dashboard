@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { postService } from '../../../services/postService';
 import { commentService } from '../../../services/commentService';
-import { WEBSITE_BASE_URL } from '../../../services/apiClient';
+import { buildWebsiteUrl } from '../../../services/apiClient';
 import { useToast } from '../../../context/ToastContext';
 import Loading from '../../../components/shared/Loading';
 import ErrorState from '../../../components/shared/ErrorState';
@@ -134,7 +134,7 @@ export default function PostDetailsPage() {
         <div className="flex flex-wrap items-center gap-2">
           {post.customUrls?.[0] ? (
             <a
-              href={`${WEBSITE_BASE_URL}${post.customUrls[0]}`}
+              href={buildWebsiteUrl(post.customUrls[0])}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 text-xs font-semibold transition-colors"

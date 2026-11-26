@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { customUrlService } from '../../../services/customUrlService';
 import { postService } from '../../../services/postService';
-import { WEBSITE_BASE_URL } from '../../../services/apiClient';
+import { buildWebsiteUrl } from '../../../services/apiClient';
 import { useToast } from '../../../context/ToastContext';
 import DataTable, { type DataTableColumn } from '../../../components/shared/DataTable';
 import Pagination from '../../../components/shared/Pagination';
@@ -60,8 +60,6 @@ export default function CustomUrlsPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<CustomUrlItem | null>(null);
   const [deleting, setDeleting] = useState(false);
-
-  const websiteOrigin = (WEBSITE_BASE_URL || 'https://privatedelights.ch').replace(/\/+$/, '');
 
   const loadUrls = useCallback(async () => {
     try {
@@ -194,7 +192,7 @@ export default function CustomUrlsPage() {
   };
 
   const handleCopyUrl = async (item: CustomUrlItem) => {
-    const fullUrl = `${websiteOrigin}/${item.country}/${item.state}/${item.city}/${item.username}`;
+    const fullUrl = buildWebsiteUrl(`/${item.country}/${item.state}/${item.city}/${item.username}`);
     try {
       await navigator.clipboard.writeText(fullUrl);
       setCopiedId(item._id);
@@ -235,10 +233,18 @@ export default function CustomUrlsPage() {
       header: 'Custom URL',
       render: (item) => {
         const path = `/${item.country}/${item.state}/${item.city}/${item.username}`;
+        const fullUrl = buildWebsiteUrl(path);
         return (
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-blue-400 break-all">{path}</span>
+              <a
+                href={fullUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-mono text-xs text-blue-400 hover:underline break-all"
+              >
+                {fullUrl}
+              </a>
               <button
                 type="button"
                 onClick={() => void handleCopyUrl(item)}
@@ -309,7 +315,7 @@ export default function CustomUrlsPage() {
       header: 'Actions',
       align: 'right',
       render: (item) => {
-        const fullUrl = `${websiteOrigin}/${item.country}/${item.state}/${item.city}/${item.username}`;
+        const fullUrl = buildWebsiteUrl(`/${item.country}/${item.state}/${item.city}/${item.username}`);
         return (
           <div className="inline-flex items-center justify-end gap-1.5 flex-wrap">
             <button
@@ -499,8 +505,7 @@ export default function CustomUrlsPage() {
               Live URL Preview
             </div>
             <div className="font-mono text-xs text-blue-400 break-all mt-0.5">
-              {websiteOrigin}
-              {previewPath}
+              {buildWebsiteUrl(previewPath)}
             </div>
           </div>
 

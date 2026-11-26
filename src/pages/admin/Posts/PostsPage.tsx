@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, Search, Eye, Edit, Archive, Globe, Trash2, ExternalLink } from 'lucide-react';
 import { postService } from '../../../services/postService';
-import { WEBSITE_BASE_URL } from '../../../services/apiClient';
+import { buildWebsiteUrl } from '../../../services/apiClient';
 import { useToast } from '../../../context/ToastContext';
 import DataTable, { type DataTableColumn } from '../../../components/shared/DataTable';
 import Pagination from '../../../components/shared/Pagination';
@@ -203,7 +203,7 @@ export default function PostsPage() {
 
           {post.customUrls?.[0] ? (
             <a
-              href={`${WEBSITE_BASE_URL}${post.customUrls[0]}`}
+              href={buildWebsiteUrl(post.customUrls[0])}
               target="_blank"
               rel="noreferrer"
               title="Open live page"
