@@ -202,16 +202,18 @@ export default function PostsPage() {
           </button>
 
           {post.customUrls?.[0] ? (
-            <a
-              href={buildWebsiteUrl(post.customUrls[0])}
-              target="_blank"
-              rel="noreferrer"
-              title="Open live page"
-              aria-label={`Open live page for ${post.title}`}
-              className="p-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 transition-colors"
-            >
-              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-            </a>
+            buildWebsiteUrl(post.customUrls[0]) ? (
+              <a
+                href={buildWebsiteUrl(post.customUrls[0])}
+                target="_blank"
+                rel="noreferrer"
+                title="Open live page"
+                aria-label={`Open live page for ${post.title}`}
+                className="p-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 transition-colors"
+              >
+                <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
+            ) : null
           ) : (
             <Link
               to="/admin/custom-urls"

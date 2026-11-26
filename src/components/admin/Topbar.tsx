@@ -34,15 +34,17 @@ export default function Topbar({ pageTitle, onOpenMobileMenu }: TopbarProps) {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          <a
-            href={WEBSITE_BASE_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-medium text-slate-300 hover:text-white transition-colors"
-          >
-            <span>Open Website</span>
-            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-          </a>
+          {WEBSITE_BASE_URL && (
+            <a
+              href={WEBSITE_BASE_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              <span>Open Website</span>
+              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+            </a>
+          )}
 
           <Link
             to="/admin/profile"

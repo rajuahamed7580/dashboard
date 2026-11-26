@@ -193,6 +193,7 @@ export default function CustomUrlsPage() {
 
   const handleCopyUrl = async (item: CustomUrlItem) => {
     const fullUrl = buildWebsiteUrl(`/${item.country}/${item.state}/${item.city}/${item.username}`);
+    if (!fullUrl) return;
     try {
       await navigator.clipboard.writeText(fullUrl);
       setCopiedId(item._id);
@@ -226,6 +227,7 @@ export default function CustomUrlsPage() {
   };
 
   const previewPath = `/${sanitizeSegment(form.country || 'USA', '-')}/${sanitizeSegment(form.state || 'California', '-')}/${sanitizeSegment(form.city || 'Norwalk', '-')}/${sanitizeSegment(form.username || 'miaa_snow', '_')}`;
+  const previewUrl = buildWebsiteUrl(previewPath);
 
   const columns: DataTableColumn<CustomUrlItem>[] = [
     {
@@ -236,28 +238,30 @@ export default function CustomUrlsPage() {
         const fullUrl = buildWebsiteUrl(path);
         return (
           <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <a
-                href={fullUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="font-mono text-xs text-blue-400 hover:underline break-all"
-              >
-                {fullUrl}
-              </a>
-              <button
-                type="button"
-                onClick={() => void handleCopyUrl(item)}
-                title="Copy full URL"
-                className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors flex-shrink-0"
-              >
-                {copiedId === item._id ? (
-                  <Check className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
-                ) : (
-                  <Copy className="w-3.5 h-3.5" aria-hidden="true" />
-                )}
-              </button>
-            </div>
+            {fullUrl && (
+              <div className="flex items-center gap-2">
+                <a
+                  href={fullUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-mono text-xs text-blue-400 hover:underline break-all"
+                >
+                  {fullUrl}
+                </a>
+                <button
+                  type="button"
+                  onClick={() => void handleCopyUrl(item)}
+                  title="Copy full URL"
+                  className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors flex-shrink-0"
+                >
+                  {copiedId === item._id ? (
+                    <Check className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+            )}
             {item.shortTitle && (
               <div className="text-[11px] text-slate-400 mt-0.5">
                 Short title: <span className="text-slate-200">{item.shortTitle}</span>
@@ -336,16 +340,18 @@ export default function CustomUrlsPage() {
               {item.isActive ? 'Disable' : 'Enable'}
             </button>
 
-            <a
-              href={fullUrl}
-              target="_blank"
-              rel="noreferrer"
-              title="Open live custom URL"
-              aria-label={`Open live page ${fullUrl}`}
-              className="p-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 transition-colors"
-            >
-              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-            </a>
+            {fullUrl && (
+              <a
+                href={fullUrl}
+                target="_blank"
+                rel="noreferrer"
+                title="Open live custom URL"
+                aria-label={`Open live page ${fullUrl}`}
+                className="p-1.5 rounded-lg bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 transition-colors"
+              >
+                <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
+            )}
 
             <button
               type="button"
@@ -501,12 +507,16 @@ export default function CustomUrlsPage() {
         {/* Live URL Preview */}
         <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">
-              Live URL Preview
-            </div>
-            <div className="font-mono text-xs text-blue-400 break-all mt-0.5">
-              {buildWebsiteUrl(previewPath)}
-            </div>
+            {previewUrl && (
+              <>
+                <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">
+                  Live URL Preview
+                </div>
+                <div className="font-mono text-xs text-blue-400 break-all mt-0.5">
+                  {previewUrl}
+                </div>
+              </>
+            )}
           </div>
 
           <button

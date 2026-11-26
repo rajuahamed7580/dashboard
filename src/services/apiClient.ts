@@ -1,7 +1,10 @@
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL;
 
-const rawWebsiteBaseUrl = (import.meta.env.VITE_WEBSITE_BASE_URL || '').trim().replace(/\/+$/, '');
+const rawWebsiteBaseUrl = String(import.meta.env.VITE_WEBSITE_BASE_URL || '')
+  .trim()
+  .replace(/^['"]|['"]$/g, '')
+  .replace(/\/+$/, '');
 
 export const WEBSITE_BASE_URL = rawWebsiteBaseUrl
   ? /^https?:\/\//i.test(rawWebsiteBaseUrl)
@@ -10,8 +13,9 @@ export const WEBSITE_BASE_URL = rawWebsiteBaseUrl
   : '';
 
 export function buildWebsiteUrl(path: string): string {
+  if (!WEBSITE_BASE_URL) return '';
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return WEBSITE_BASE_URL ? `${WEBSITE_BASE_URL}${normalizedPath}` : normalizedPath;
+  return `${WEBSITE_BASE_URL}${normalizedPath}`;
 }
 
 export const TOKEN_STORAGE_KEY = 'pd_admin_token';

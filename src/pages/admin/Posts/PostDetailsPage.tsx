@@ -133,15 +133,17 @@ export default function PostDetailsPage() {
 
         <div className="flex flex-wrap items-center gap-2">
           {post.customUrls?.[0] ? (
-            <a
-              href={buildWebsiteUrl(post.customUrls[0])}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 text-xs font-semibold transition-colors"
-            >
-              <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-              View Live
-            </a>
+            buildWebsiteUrl(post.customUrls[0]) ? (
+              <a
+                href={buildWebsiteUrl(post.customUrls[0])}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-blue-300 border border-blue-800 text-xs font-semibold transition-colors"
+              >
+                <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                View Live
+              </a>
+            ) : null
           ) : (
             <Link
               to="/admin/custom-urls"
